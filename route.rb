@@ -1,5 +1,3 @@
-require_relative 'Station.rb'
-
 class Route
   attr_reader :first_station, :last_station, :intermediate_stations
 
