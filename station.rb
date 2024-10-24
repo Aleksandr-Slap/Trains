@@ -25,6 +25,6 @@ class Station
   def send_a_train(train)
     puts "This train is not at the station" unless trains.include?(train)
     trains.delete(train)
-    puts "The train #{train.number} left the station"
+    puts "The train #{train.number} left the station #{self.name}"
   end  
 end 
