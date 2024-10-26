@@ -16,4 +16,4 @@ train.show_current_station
 train.show_next_station
 train.show_previous_station
 # train.join_vagon
-# binding.irb
+# binding.irbe
