@@ -1,11 +1,11 @@
 class Train
-  attr_accessor :speed, :vagons
-  attr_reader :route, :number, :current_station
+  attr_accessor :speed
+  attr_reader :route, :type, :number, :current_station, :vagons
 
-  def initialize(number, type, vagons)
+  def initialize(number, type)
     @number = number
     @type = type
-    @vagons = vagons
+    @vagons = []
     @speed = 0
   end
 
@@ -17,16 +17,16 @@ class Train
 
   def next_station
     return puts 'This last station' if self.route.last == current_station
-    current_station.send_a_train(self)
+    send_a_train_at_station
     @current_station = @route[index_current_station + 1]
-    current_station.accept_train(self)
+    accept_train_at_station
   end
 
   def previous_station
     return puts 'This first station' if self.route.first == current_station
-    current_station.send_a_train(self)
+    send_a_train_at_station
     @current_station = @route[index_current_station - 1]
-    current_station.accept_train(self)
+    accept_train_at_station
   end
 
   def show_current_station
@@ -43,15 +43,25 @@ class Train
     puts "Previous station is #{@route[index_current_station - 1 ].name }"
   end  
 
-  def join_vagon
-    speed == 0 ? self.vagons += 1 : 'The train is moving!'
+  def join_vagon(vagon)
+    speed == 0 && self.type == vagon.type ? self.vagons << vagon : 'The train is moving or invalid vagon type!'
   end
 
-  def unhook_vagon
-    speed == 0 ? self.vagons -= 1 : 'The train is moving!'
+  def unhook_vagon(vagon)
+    speed == 0 && self.type == vagon.type ? self.vagons.delete(vagon) : 'The train is moving or invalid vagon type!'
   end
+
+  protected
 
   def index_current_station
     @route.find_index(current_station)
+  end
+
+  def send_a_train_at_station
+    current_station.send_a_train(self)
+  end
+
+  def accept_train_at_station
+    current_station.accept_train(self)
   end  
 end
